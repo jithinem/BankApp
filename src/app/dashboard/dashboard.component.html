@@ -1,0 +1,56 @@
+<input type="button" value="Logout" class="btn btn-primary" style="float: right;" (click)="logout()">
+<input type="button" value="delete" class="btn btn-secondary" style="float: right;" (click)="delete()" >
+<app-delete [item]="acno"></app-delete>
+<h1>Welcome {{user}}</h1>
+<div [ngClass]="acno? 'style1':''" class="parent">
+  <div  class="child">
+    <form action="" [formGroup]="depositForm">
+      <div class="m-0 p-5 bg-light text-center border border-primary border-2" style="width: 400px;">
+        <h3 class="text-center">Deposit</h3>
+          <div class="r1">
+              <input class="mt-3 px-3" type="text" [(ngModel)]="acno" formControlName="acno" id="depo_acno" placeholder="Account number">
+              <div style="color: red;" *ngIf="this.depositForm.get('acno')?.errors && this.depositForm.get('acno')?.touched">Invalid Account number</div>
+
+          </div>
+          <div class="r2">
+              <input class="my-2 px-3" type="password" [(ngModel)]="pswd" formControlName="pswd" id="depo_pswd" placeholder="Password">
+              <div style="color: red;" *ngIf="this.depositForm.get('pswd')?.errors && this.depositForm.get('pswd')?.touched">Invalid Password</div>
+
+          </div>
+          <div class="r3">
+              <input class="mb-2 px-3" type="text" [(ngModel)]="amount" formControlName="amount" id="depo_amount" placeholder="Amount">
+              <div style="color: red;" *ngIf="this.depositForm.get('amount')?.errors && this.depositForm.get('amount')?.touched">Wrong data</div>
+
+          </div>
+          <button class="btn btn-warning btn-lg btn-outline-secondary px-4 text-dark" (click)="deposit()">Deposit</button>
+        </div> 
+  
+    </form>
+  </div>
+  <!-- .................................... -->
+  <div class="child">
+    <form action="" [formGroup]="withDraw">
+      <div class="m-0 p-5 bg-light text-center border border-primary border-2" style="width: 400px;">
+        <h3 class="text-center">Withdraw</h3>
+          <div class="r1">
+              <input class="mt-3 px-3" type="text" [(ngModel)]="acno1" formControlName="acno" id="w_acno" placeholder="Account number">
+              <div style="color: red;" *ngIf="this.withDraw.get('acno')?.errors && this.withDraw.get('acno')?.touched">Invalid Account number</div>
+
+          </div>
+          <div class="r2">
+              <input class="my-2 px-3" type="password" [(ngModel)]="pswd1" formControlName="pswd" id="w_pswd" placeholder="Password">
+              <div style="color: red;" *ngIf="this.withDraw.get('pswd')?.errors && this.withDraw.get('pswd')?.touched">Invalid Password</div>
+
+          </div>
+          <div class="r3">
+              <input class="mb-2 px-3" type="text" [(ngModel)]="amount1" formControlName="amount" id="w_amount" placeholder="Amount">
+              <div style="color: red;" *ngIf="this.withDraw.get('amount')?.errors && this.withDraw.get('amount')?.touched">Wrong data</div>
+
+          </div>
+          <button class="btn btn-warning btn-lg btn-outline-secondary px-4 text-dark" (click)="withdraw()">Withdraw</button>
+        </div>   
+    </form>
+  </div>
+
+</div>
+<a routerLink="/transaction">View transaction history</a>

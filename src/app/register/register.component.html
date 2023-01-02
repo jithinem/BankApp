@@ -9,26 +9,31 @@
   
                   <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
   
-                  <form class="mx-1 mx-md-4">
+                  <form class="mx-1 mx-md-4" [formGroup]="registerForm">
   
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <input type="text" id="reg_acno" class="form-control" placeholder="Account Number" />
+                        <input type="text" [(ngModel)]="acno" formControlName="acno"  id="reg_acno" class="form-control" placeholder="Account Number" />
+                        <div style="color: red;" *ngIf="this.registerForm.get('acno')?.errors && this.registerForm.get('acno')?.touched">Invalid Account number</div>
+
                       </div>
                     </div>
   
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <input type="text" id="reg_name" name="username" class="form-control" placeholder="Username" />
+                        <input type="text" [(ngModel)]="uname" formControlName="uname" id="reg_name" name="username" class="form-control" placeholder="Username" />
+                        <div style="color: red;" *ngIf="this.registerForm.get('uname')?.errors && this.registerForm.get('uname')?.touched">Invalid Username</div>
                       </div>
                     </div>
   
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <input type="password" id="reg_pswd" class="form-control" placeholder="Password" />
+                        <input type="password" [(ngModel)]="pswd" formControlName="pswd" id="reg_pswd" class="form-control" placeholder="Password" />
+                        <div style="color: red;" *ngIf="this.registerForm.get('pswd')?.errors && this.registerForm.get('pswd')?.touched">Invalid Password</div>
+
                       </div>
                     </div>
   
@@ -40,7 +45,7 @@
                     </div>
   
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                      <button type="button" onclick="register()" class="btn btn-primary btn-lg">Register</button>
+                      <button type="button" (click)="register()" class="btn btn-primary btn-lg">Register</button>
                     </div>
   
                   </form>
