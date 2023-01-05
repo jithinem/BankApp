@@ -10,8 +10,10 @@ import { DataService } from '../services/data.service';
 })
 export class DashboardComponent implements OnInit {
   user:any;
+  sdate:any;
   constructor(private ds:DataService, private fb:FormBuilder, private router:Router){
     this.user=this.ds.currentUser;
+    this.sdate=Date();
   }
   ngOnInit(): void {
   }
@@ -64,6 +66,10 @@ export class DashboardComponent implements OnInit {
     // alert('delete');
     this.acno=JSON.parse(localStorage.getItem('Currentacno')||'')
   }
+
+  onCancel(){
+    this.acno="";
+  }  
 
 
 }
