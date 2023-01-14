@@ -30,20 +30,25 @@ export class RegisterComponent implements OnInit  {
     var acno=this.registerForm.value.acno;
     var pswd=this.registerForm.value.pswd;
     var uname=this.registerForm.value.uname;
-    var userDetails=this.ds.userDetails;
-    const result=this.ds.register(acno,uname,pswd)
+    // var userDetails=this.ds.userDetails;
     if(this.registerForm.valid){
-      if(result){
-        alert('Registered successfully')
-        this.router.navigateByUrl('')
-      }
-      else{
-        alert("register failed")
-        console.log(this.registerForm.get('uname')?.errors);
-        
-      }
-  
-
+      const result=this.ds.register(acno,uname,pswd).subscribe(
+        (result:any)=>{
+          alert(result.message)
+          this.router.navigateByUrl('')
+        },
+        result=>{
+          alert(result.error.message)
+        }
+      )
+      // if(result){
+      //   alert('Registered successfully')
+      //   this.router.navigateByUrl('')
+      // }
+      // else{
+      //   alert("register failed")
+      //   console.log(this.registerForm.get('uname')?.errors);
+      // }
     }
     // if(acno in userDetails){
     //   alert('User details already registered');

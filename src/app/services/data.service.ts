@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Action } from 'rxjs/internal/scheduler/Action';
 
@@ -7,8 +8,8 @@ import { Action } from 'rxjs/internal/scheduler/Action';
 export class DataService {
   currentUser:any;
   currentAcno:any;
-  constructor() {
-    this.getDetails();
+  constructor(private http:HttpClient) {
+    // this.getDetails();
   }
   saveDetails(){
     if(this.userDetails){
@@ -21,58 +22,69 @@ export class DataService {
       localStorage.setItem('Currentacno',JSON.stringify(this.currentAcno))
     }
   }
-  getDetails(){
-    if(localStorage.getItem('Database')){
-      this.userDetails=JSON.parse(localStorage.getItem('Database')||'')
-    }
-    if(localStorage.getItem('Currentacno')){
-      this.currentAcno=JSON.parse(localStorage.getItem('Currentacno')||'')
-    }
-    if(localStorage.getItem('Currentuser')){
-      this.currentUser=JSON.parse(localStorage.getItem('Currentuser')||'')
-    }
-  }
+  // getDetails(){
+  //   if(localStorage.getItem('Database')){
+  //     this.userDetails=JSON.parse(localStorage.getItem('Database')||'')
+  //   }
+  //   if(localStorage.getItem('Currentacno')){
+  //     this.currentAcno=JSON.parse(localStorage.getItem('Currentacno')||'')
+  //   }
+  //   if(localStorage.getItem('Currentuser')){
+  //     this.currentUser=JSON.parse(localStorage.getItem('Currentuser')||'')
+  //   }
+  // }
   userDetails:any={
     1000:{acno:1000,username:"Amal",password:1000,balance:2000,transaction:[]},
     1001:{acno:1001,username:"Arun",password:1001,balance:2000,transaction:[]},
     1002:{acno:1002,username:"Akshay",password:1002,balance:2000,transaction:[]}
   }
   register(acno:any,username:any,password:any){
-    var userDetails=this.userDetails;
-    if(acno in this.userDetails){
-      this.saveDetails();
-      return false;
+    const body={
+      acno,
+      username,
+      password
     }
-    else{
-      userDetails[acno]={
-        acno:acno,
-        username:username,
-        password:password,
-        balance:0,
-        transaction:[]
-      }
-      return true;
-    }    
+    return this.http.post('http://localhost:3000/register',body)
+    // var userDetails=this.userDetails;
+    // if(acno in this.userDetails){
+    //   this.saveDetails();
+    //   return false;
+    // }
+    // else{
+    //   userDetails[acno]={
+    //     acno:acno,
+    //     username:username,
+    //     password:password,
+    //     balance:0,
+    //     transaction:[]
+    //   }
+    //   return true;
+    // }    
   }
 
-  login(acno:any,pswd:any){
-    var userDetails=this.userDetails;
-    if(acno in this.userDetails){
-      if(pswd==this.userDetails[acno]['password']){
-        this.currentUser=userDetails[acno]['username'];
-        this.currentAcno=acno;
+  login(acno:any,password:any){
+    const body={
+      acno,
+      password
+    }
+    return this.http.post('http://localhost:3000/login',body)
+    // var userDetails=this.userDetails;
+    // if(acno in this.userDetails){
+    //   if(pswd==this.userDetails[acno]['password']){
+    //     this.currentUser=userDetails[acno]['username'];
+    //     this.currentAcno=acno;
         this.saveDetails();
-        return true;
-      }
-      else{
-        alert('Invalid password');
-        return false;
-      }
-    }
-    else{
-      alert('Invalid userDetails')
-      return false;
-    }
+    //     return true;
+    //   }
+    //   else{
+    //     alert('Invalid password');
+    //     return false;
+    //   }
+    // }
+    // else{
+    //   alert('Invalid userDetails')
+    //   return false;
+    // }
   }
 
   deposit(acno:any,pswd:any,amt:any){

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -11,9 +12,12 @@ import { DataService } from '../services/data.service';
 export class DashboardComponent implements OnInit {
   user:any;
   sdate:any;
-  constructor(private ds:DataService, private fb:FormBuilder, private router:Router){
-    this.user=this.ds.currentUser;
+  constructor(private ds:DataService, private fb:FormBuilder, private router:Router, private http:HttpClient){
+    // this.user=this.ds.currentUser;
+    this.user=JSON.parse(localStorage.getItem('currentUser')||'')
     this.sdate=Date();
+    console.log(localStorage);
+    
   }
   ngOnInit(): void {
   }

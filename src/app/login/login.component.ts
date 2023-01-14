@@ -68,15 +68,29 @@ pswd:any;
 login(){
   var acno=this.loginForm.value.acno;
   var pswd=this.loginForm.value.pswd;
-  var userDetails=this.ds.userDetails;
-  const result=this.ds.login(acno,pswd);
-  if(result){
-    alert('Login successful');
-    this.router.navigateByUrl('dashboard');
+  // var userDetails=this.ds.userDetails;
+  if(this.loginForm.valid){
+    this.ds.login(acno,pswd).subscribe(
+      (result:any)=>{
+        localStorage.setItem('currentUser',JSON.stringify(result.currentUser))
+        localStorage.setItem('currentAcno',JSON.stringify(result.currentAcno))
+        localStorage.setItem('Token',JSON.stringify(result.token))
+        alert(result.message)
+        this.router.navigateByUrl('dashboard')
+      },
+      result=>{
+        alert(result.error.message)
+      }
+    )
+
   }
-  else{
-    alert('Login failed');
-  }
+  // if(result){
+  //   alert('Login successful');
+  //   this.router.navigateByUrl('dashboard');
+  // }
+  // else{
+  //   alert('Login failed');
+  // }
 }
 
 // acnoChange(event:any){
