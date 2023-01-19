@@ -14,13 +14,13 @@
                 <p class="text-white-50 mb-5">Please enter your Account number and password!</p>
   
                 <div class="form-outline form-white mb-4">
-                  <input [(ngModel)]="acno" formControlName="acno" type="text" id="login_acno" name="acno" class="form-control form-control-lg " placeholder="Account number" />
+                  <input  formControlName="acno" type="text" id="login_acno" name="acno" class="form-control form-control-lg " placeholder="Account number" />
                   <div style="color: red;" *ngIf="this.loginForm.get('acno')?.errors && this.loginForm.get('acno')?.touched">Invalid Account number</div>
 
                 </div>
   
                 <div class="form-outline form-white mb-4">
-                  <input [(ngModel)]="pswd" formControlName="pswd" type="password" id="login_pswd" name="password" class="form-control form-control-lg" placeholder="password" />
+                  <input  formControlName="pswd" type="password" id="login_pswd" name="password" class="form-control form-control-lg" placeholder="password" />
                   <div style="color: red;" *ngIf="this.loginForm.get('pswd')?.errors && this.loginForm.get('pswd')?.touched">Invalid Password</div>
 
                 </div>

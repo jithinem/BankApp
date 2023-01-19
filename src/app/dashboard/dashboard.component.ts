@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
     // this.user=this.ds.currentUser;
     this.user=JSON.parse(localStorage.getItem('currentUser')||'')
     this.sdate=Date();
-    console.log(localStorage);
+    // console.log(localStorage);
     
   }
   ngOnInit(): void {
@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
     pswd:['',[Validators.required,Validators.pattern('[a-zA-Z0-9]*')]],
     amount:['',[Validators.required,Validators.pattern('[0-9]*')]]
   })
-  withDraw=this.fb.group({
+  withdrawForm=this.fb.group({
     acno:['',[Validators.required,Validators.pattern('[0-9]*')]],
     pswd:['',[Validators.required,Validators.pattern('[a-zA-Z0-9]*')]],
     amount:['',[Validators.required,Validators.pattern('[0-9]*')]]
@@ -43,22 +43,43 @@ export class DashboardComponent implements OnInit {
   deposit(){
     // alert('Deposit successful');
     var acno=this.depositForm.value.acno;
-    var pswd=this.depositForm.value.pswd;
+    var password=this.depositForm.value.pswd;
     var amount=this.depositForm.value.amount;
-    const result=this.ds.deposit(acno,pswd,amount);
-    if(result){
-      alert(`${amount} is credited to ${acno} and balance is ${result}`)
+    if(this.depositForm.valid){
+      this.ds.deposit(acno,password,amount).subscribe(
+        (result:any)=>{
+          alert(result.message)
+        },
+        result=>{
+          alert(result.error.message)
+        }
+      )
     }
+
+    // const result=this.ds.deposit(acno,pswd,amount);
+    // if(result){
+    //   alert(`${amount} is credited to ${acno} and balance is ${result}`)
+    // }
   }
   withdraw(){
     // alert('Withdrawal successful');
-    var acno=this.depositForm.value.acno;
-    var pswd=this.depositForm.value.pswd;
-    var amount=this.depositForm.value.amount;
-    const result=this.ds.withdraw(acno,pswd,amount);
-    if(result){
-      alert(`${amount} is debited from ${acno} and balance is ${result}`)
+    var acno=this.withdrawForm.value.acno;
+    var password=this.withdrawForm.value.pswd;
+    var amount=this.withdrawForm.value.amount;
+    if(this.withdrawForm.valid){
+      this.ds.withdraw(acno,password,amount).subscribe(
+        (result:any)=>{
+          alert(result.message)
+        },
+        result=>{
+          alert(result.error.message)
+        }
+      )
     }
+    // const result=this.ds.withdraw(acno,pswd,amount);
+    // if(result){
+    //   alert(`${amount} is debited from ${acno} and balance is ${result}`)
+    // }
   }
   logout(){
     // alert('logout successful');
@@ -68,7 +89,7 @@ export class DashboardComponent implements OnInit {
   }
   delete(){
     // alert('delete');
-    this.acno=JSON.parse(localStorage.getItem('Currentacno')||'')
+    this.acno=JSON.parse(localStorage.getItem('currentAcno')||'')
   }
 
   onCancel(){
