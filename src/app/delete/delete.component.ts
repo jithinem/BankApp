@@ -13,10 +13,15 @@ export class DeleteComponent implements OnInit {
   //To hold value from the parent
   @Input() item:string | undefined
 
-  @Output() Oncancel= new EventEmitter;  //to generate an event  
+  @Output() Oncancel= new EventEmitter;  //to generate an event 
+  @Output() Ondelete=new EventEmitter; 
   
   cancel(){
     this.Oncancel.emit();
+  }
+  delete(){
+    this.Ondelete.emit(this.item);
+    alert('delete');
   }
 
 

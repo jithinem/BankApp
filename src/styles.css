@@ -18,3 +18,8 @@
     margin-bottom: 100px;
     margin-left: 100px;
 }
+body{
+    background-image: url('https://i.postimg.cc/9fSNPH7V/pngwing-com.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}

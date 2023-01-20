@@ -14,12 +14,18 @@ export class DashboardComponent implements OnInit {
   sdate:any;
   constructor(private ds:DataService, private fb:FormBuilder, private router:Router, private http:HttpClient){
     // this.user=this.ds.currentUser;
-    this.user=JSON.parse(localStorage.getItem('currentUser')||'')
-    this.sdate=Date();
-    // console.log(localStorage);
+    if(localStorage.getItem('currentUser')){
+      this.user=JSON.parse(localStorage.getItem('currentUser')||'')
+      this.sdate=Date();
+      // console.log(localStorage);  
+    }
     
   }
   ngOnInit(): void {
+    if(!localStorage.getItem('currentAcno')){
+      alert('please login first')
+      this.router.navigateByUrl('')
+    }
   }
   depositForm=this.fb.group({
     acno:['',[Validators.required,Validators.pattern('[0-9]*')]],
@@ -83,8 +89,9 @@ export class DashboardComponent implements OnInit {
   }
   logout(){
     // alert('logout successful');
-    localStorage.removeItem('Currentacno');
-    localStorage.removeItem('Currentuser');
+    localStorage.removeItem('currentAcno');
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('Token');            //to remove token
     this.router.navigateByUrl('');
   }
   delete(){
@@ -94,7 +101,19 @@ export class DashboardComponent implements OnInit {
 
   onCancel(){
     this.acno="";
-  }  
+  } 
+  onDelete(event:any){
+    // alert('event')
+    this.ds.deleteAcc(event).subscribe(
+      (result:any)=>{
+        alert(result.message)
+        this.router.navigateByUrl('')
+      },
+      result=>{
+        alert(result.error.message)
+      }
+    )
+  } 
 
 
 }

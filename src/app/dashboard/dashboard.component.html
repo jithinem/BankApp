@@ -1,6 +1,6 @@
 <input type="button" value="Logout" class="btn btn-primary" style="float: right;" (click)="logout()">
 <input type="button" value="delete" class="btn btn-secondary" style="float: right;" (click)="delete()" >
-<app-delete [item]="acno" (Oncancel)="onCancel()" ></app-delete>
+<app-delete [item]="acno" (Ondelete)="onDelete($event)" (Oncancel)="onCancel()" ></app-delete>
 <h1>Welcome {{user}}</h1>
 <h4>System date:{{sdate | date:'short'}}</h4>
 <div [ngClass]="acno? 'style1':''" class="parent">
